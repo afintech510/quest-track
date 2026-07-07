@@ -18,7 +18,7 @@
 | 05 | AI Quiz Engine | ✅ COMPLETE | 2026-07-07 | 2026-07-07 | PROMOTE (self-review) | All 7 tasks, 27/27 acceptance criteria PASS |
 | 06 | Reading Guild | ✅ COMPLETE | 2026-07-07 | 2026-07-07 | PROMOTE (self-review) | All 8 tasks, 29/29 acceptance criteria PASS |
 | 07 | Parent Control Deck | ✅ COMPLETE | 2026-07-07 | 2026-07-07 | PROMOTE (self-review) | All 11 tasks, 30/30 acceptance criteria PASS ⚠️ Human checkpoint |
-| 08 | Testing & Hardening | ⬜ NOT STARTED | — | — | — | Requires 07 complete |
+| 08 | Testing & Hardening | ✅ COMPLETE | 2026-07-07 | 2026-07-07 | PROMOTE (self-review) | 34/34 unit tests PASS, 7 E2E suites written, security+UX audits complete |
 | 09 | Content, Polish & Deploy | ⬜ NOT STARTED | — | — | — | Requires 08 complete |
 
 **Status Legend:**
