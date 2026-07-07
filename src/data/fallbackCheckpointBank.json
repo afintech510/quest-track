@@ -1,0 +1,65 @@
+[
+  {
+    "question": "What happened at the beginning of the chapter you just read?",
+    "options": ["A) The main character went on an adventure", "B) A new character was introduced", "C) There was a big problem to solve", "D) The story ended happily"],
+    "correct_index": 0,
+    "explanation": "Stories often start chapters with the main character doing something new or exciting!",
+    "question_type": "recall"
+  },
+  {
+    "question": "How do you think the main character was feeling?",
+    "options": ["A) Happy and excited", "B) Nervous but brave", "C) Confused and curious", "D) Calm and peaceful"],
+    "correct_index": 1,
+    "explanation": "Characters often feel nervous when facing something new, but they find their courage! Great thinking!",
+    "question_type": "inference"
+  },
+  {
+    "question": "What is a 'setting' in a story?",
+    "options": ["A) The main character", "B) The problem in the story", "C) Where and when the story takes place", "D) The ending of the story"],
+    "correct_index": 2,
+    "explanation": "The setting tells us where and when a story happens. Nice vocabulary skills!",
+    "question_type": "vocabulary"
+  },
+  {
+    "question": "What might happen next in the story?",
+    "options": ["A) The character will face a new challenge", "B) Everything will stay the same", "C) The book will end suddenly", "D) A completely new story will begin"],
+    "correct_index": 0,
+    "explanation": "Good readers make predictions! Characters usually keep facing new challenges as the story goes on.",
+    "question_type": "prediction"
+  },
+  {
+    "question": "Why is the title of your book important?",
+    "options": ["A) It tells you exactly what happens", "B) It gives you a clue about what the story is about", "C) It's just decoration", "D) It doesn't matter at all"],
+    "correct_index": 1,
+    "explanation": "Titles give us clues about the story's main idea. You're becoming a great reader!",
+    "question_type": "inference"
+  },
+  {
+    "question": "What does 'character' mean in a story?",
+    "options": ["A) A letter of the alphabet", "B) A person, animal, or creature in the story", "C) The cover of the book", "D) A type of writing"],
+    "correct_index": 1,
+    "explanation": "Characters are the people, animals, or creatures that the story is about. Great vocabulary!",
+    "question_type": "vocabulary"
+  },
+  {
+    "question": "What is the most important thing that happened in what you just read?",
+    "options": ["A) The characters talked to each other", "B) Something changed for the main character", "C) The weather was described", "D) New words were used"],
+    "correct_index": 1,
+    "explanation": "The most important events are ones that change things for the characters. You're reading carefully!",
+    "question_type": "recall"
+  },
+  {
+    "question": "What lesson do you think the character is learning?",
+    "options": ["A) How to be a better friend", "B) How to solve problems", "C) How to be brave", "D) All of the above!"],
+    "correct_index": 3,
+    "explanation": "Characters often learn many lessons at once — about friendship, problem-solving, and courage!",
+    "question_type": "connection"
+  },
+  {
+    "question": "What does 'plot' mean?",
+    "options": ["A) A piece of land", "B) The events that happen in a story", "C) The pictures in a book", "D) The author's name"],
+    "correct_index": 1,
+    "explanation": "The plot is the series of events that make up the story. You're learning story vocabulary!",
+    "question_type": "vocabulary"
+  }
+]
