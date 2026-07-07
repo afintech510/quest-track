@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { BookOpen, Plus, Sparkles } from 'lucide-react';
 import useDeviceType from '../../hooks/useDeviceType';
 
-export default function BookAssigner({ books, bookProgress, kids, activeKid, supabase, showToast, refreshData }) {
+export default function BookAssigner({ books, bookProgress, kids, activeKid, supabase, showToast, refreshData, sessionToken }) {
   const deviceType = useDeviceType();
   const [filterTier, setFilterTier] = useState(null);
   const [filterGenre, setFilterGenre] = useState(null);
@@ -70,6 +70,7 @@ export default function BookAssigner({ books, bookProgress, kids, activeKid, sup
         headers: {
           'Authorization': `Bearer ${anonKey}`,
           'Content-Type': 'application/json',
+          ...(sessionToken ? { 'x-session-token': sessionToken } : {}),
         },
         body: JSON.stringify({
           kid_id: selectedKid.id,

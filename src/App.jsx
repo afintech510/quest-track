@@ -19,6 +19,13 @@ import BookDetail from './components/reading/BookDetail';
 import ChapterCheckpoint from './components/reading/ChapterCheckpoint';
 import BookReflection from './components/reading/BookReflection';
 import BookAssigner from './components/admin/BookAssigner';
+import ParentPinPad from './components/admin/ParentPinPad';
+import AdminDashboard from './components/admin/AdminDashboard';
+import ApprovalQueue from './components/admin/ApprovalQueue';
+import EventBuilder from './components/admin/EventBuilder';
+import ChoreBuilder from './components/admin/ChoreBuilder';
+import RewardBuilder from './components/admin/RewardBuilder';
+import StaleResetBanner from './components/admin/StaleResetBanner';
 import useSupabase from './hooks/useSupabase';
 import useDeviceType from './hooks/useDeviceType';
 import { fireConfetti } from './components/shared/ConfettiCanvas';
@@ -27,6 +34,7 @@ import useCatchUpReset from './hooks/useCatchUpReset';
 import useSpatialNav from './hooks/useSpatialNav';
 import useVisibilityReconnect from './hooks/useVisibilityReconnect';
 import useConnectionHealth from './hooks/useConnectionHealth';
+import { FAMILY_ID } from './lib/constants';
 import { Swords, GraduationCap, BookOpen, CalendarDays, ShoppingBag } from 'lucide-react';
 
 const TABS = [
@@ -48,6 +56,12 @@ function AppContent() {
   const [selectedBook, setSelectedBook] = useState(null);
   const [selectedBookProgress, setSelectedBookProgress] = useState(null);
   const [lastChapterCheckpoint, setLastChapterCheckpoint] = useState(false);
+
+  const [showPinPad, setShowPinPad] = useState(false);
+  const [sessionToken, setSessionToken] = useState(null);
+  const [tokenExpiresAt, setTokenExpiresAt] = useState(null);
+  const [adminView, setAdminView] = useState(false);
+  const [adminTab, setAdminTab] = useState('dashboard');
 
   const { showToast } = useToast();
   const { triggerLevelUp } = useLevelUp();
@@ -73,6 +87,111 @@ function AppContent() {
   );
 
   useCatchUpReset(supabase, systemState, refreshData, isOnline);
+
+  const isSessionValid = useCallback(() => {
+    return sessionToken && tokenExpiresAt && new Date(tokenExpiresAt) > new Date();
+  }, [sessionToken, tokenExpiresAt]);
+
+  useEffect(() => {
+    if (!sessionToken || !tokenExpiresAt) return;
+    const remaining = new Date(tokenExpiresAt).getTime() - Date.now();
+    if (remaining <= 0) {
+      setSessionToken(null);
+      setTokenExpiresAt(null);
+      setAdminView(false);
+      showToast('Session expired', 'info');
+      return;
+    }
+    const timer = setTimeout(() => {
+      setSessionToken(null);
+      setTokenExpiresAt(null);
+      setAdminView(false);
+      showToast('Session expired', 'info');
+    }, remaining);
+    return () => clearTimeout(timer);
+  }, [sessionToken, tokenExpiresAt, showToast]);
+
+  const handleAdminClick = useCallback(() => {
+    if (isSessionValid()) {
+      setAdminView(true);
+    } else {
+      setShowPinPad(true);
+    }
+  }, [isSessionValid]);
+
+  const handlePinSuccess = useCallback((token, expiresAt) => {
+    setSessionToken(token);
+    setTokenExpiresAt(expiresAt);
+    setShowPinPad(false);
+    setAdminView(true);
+    setAdminTab('dashboard');
+  }, []);
+
+  const handleExitAdmin = useCallback(() => {
+    setAdminView(false);
+  }, []);
+
+  const handleFactoryReset = useCallback(async () => {
+    if (!supabase || !sessionToken) return;
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    try {
+      const headers = {
+        'Authorization': `Bearer ${anonKey}`,
+        'Content-Type': 'application/json',
+        'x-session-token': sessionToken,
+      };
+      const { data: kidsData } = await supabase.from('kids').select('id').eq('family_id', FAMILY_ID);
+      for (const kid of kidsData || []) {
+        await supabase.from('kids').update({ level: 1, xp: 0, coins: 0, daily_xp_earned: 0, streak_days: 0 }).eq('id', kid.id);
+        await supabase.from('chore_events').delete().eq('kid_id', kid.id);
+        await supabase.from('quiz_attempts').delete().eq('kid_id', kid.id);
+      }
+      showToast('Factory reset complete', 'info');
+      await refreshData();
+    } catch {
+      showToast('Factory reset failed', 'error');
+    }
+  }, [supabase, sessionToken, showToast, refreshData]);
+
+  const handleUncheckAll = useCallback(async (kidId) => {
+    if (!supabase) return;
+    try {
+      await supabase.from('chore_events')
+        .update({ status: 'reset' })
+        .eq('kid_id', kidId)
+        .gte('created_at', new Date(new Date().setHours(0, 0, 0, 0)).toISOString());
+      showToast('Chores reset for today', 'info');
+      await refreshData();
+    } catch {
+      showToast('Reset failed', 'error');
+    }
+  }, [supabase, showToast, refreshData]);
+
+  const handleUpdateSettings = useCallback(async (settings) => {
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    try {
+      const response = await fetch(`${supabaseUrl}/functions/v1/update-family-settings`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${anonKey}`,
+          'Content-Type': 'application/json',
+          'x-session-token': sessionToken,
+        },
+        body: JSON.stringify({ family_id: FAMILY_ID, ...settings }),
+      });
+      const data = await response.json();
+      if (data.status === 'success') {
+        showToast('Settings updated', 'success');
+        await refreshData();
+      } else {
+        showToast(data.message || 'Update failed', 'error');
+      }
+    } catch {
+      showToast('Failed to update settings', 'error');
+    }
+  }, [sessionToken, showToast, refreshData]);
 
   const prevBookProgressIdsRef = useRef(new Set());
   useEffect(() => {
@@ -330,9 +449,94 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-surface-dark">
-      <Header />
+      <Header onAdminClick={handleAdminClick} isAdmin={adminView} onExitAdmin={handleExitAdmin} />
+
+      {showPinPad && (
+        <ParentPinPad
+          onSuccess={handlePinSuccess}
+          onClose={() => setShowPinPad(false)}
+        />
+      )}
 
       <main className="max-w-5xl mx-auto px-6 pb-8">
+        {adminView && isSessionValid() ? (
+          <div className="space-y-4">
+            <StaleResetBanner systemState={systemState} />
+
+            <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
+              {[
+                { key: 'dashboard', label: 'Dashboard' },
+                { key: 'approve', label: 'Approve' },
+                ...(deviceType !== 'tv' ? [{ key: 'manage', label: 'Manage' }] : []),
+              ].map(tab => (
+                <button
+                  key={tab.key}
+                  className={`tv-focusable px-4 py-2.5 rounded-xl font-quicksand text-sm whitespace-nowrap transition-all ${
+                    adminTab === tab.key
+                      ? 'bg-primary text-white'
+                      : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-200'
+                  }`}
+                  onClick={() => setAdminTab(tab.key)}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="bg-surface rounded-2xl p-6 min-h-[300px]">
+              {adminTab === 'dashboard' && (
+                <AdminDashboard supabase={supabase} kids={kids} />
+              )}
+
+              {adminTab === 'approve' && (
+                <ApprovalQueue
+                  choreEvents={choreEvents}
+                  kids={kids}
+                  supabase={supabase}
+                  sessionToken={sessionToken}
+                  refreshData={refreshData}
+                />
+              )}
+
+              {adminTab === 'manage' && deviceType !== 'tv' && (
+                <div className="space-y-6">
+                  <ChoreBuilder supabase={supabase} choreEvents={choreEvents} refreshData={refreshData} sessionToken={sessionToken} />
+                  <RewardBuilder supabase={supabase} rewards={rewards} refreshData={refreshData} sessionToken={sessionToken} />
+                  <EventBuilder calendarEvents={calendarEvents} kids={kids} sessionToken={sessionToken} refreshData={refreshData} />
+                  <BookAssigner books={books} bookProgress={bookProgress} kids={kids} activeKid={activeKid} supabase={supabase} showToast={showToast} refreshData={refreshData} sessionToken={sessionToken} />
+                  <ProgressiveRamp supabase={supabase} kids={kids} choreEvents={choreEvents} />
+
+                  <div className="border-t border-slate-700 pt-4 space-y-4">
+                    <h3 className="font-fredoka text-base text-white">Settings & Controls</h3>
+                    <EmergencyControls
+                      deviceType={deviceType}
+                      kids={kids}
+                      systemState={systemState}
+                      onUpdateSettings={handleUpdateSettings}
+                      onUncheckAll={handleUncheckAll}
+                      onFactoryReset={handleFactoryReset}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {adminTab === 'dashboard' && deviceType === 'tv' && (
+              <div className="bg-surface rounded-2xl p-6 space-y-4">
+                <h3 className="font-fredoka text-base text-white">Quick Controls</h3>
+                <EmergencyControls
+                  deviceType={deviceType}
+                  kids={kids}
+                  systemState={systemState}
+                  onUpdateSettings={handleUpdateSettings}
+                  onUncheckAll={handleUncheckAll}
+                  onFactoryReset={handleFactoryReset}
+                />
+              </div>
+            )}
+          </div>
+        ) : (
+        <>
         <ProfileSwitcher
           kids={kids}
           activeProfileId={activeProfileId}
@@ -394,10 +598,126 @@ function AppContent() {
             </p>
           </div>
         )}
+        </>
+        )}
       </main>
 
       <RemoteEmulator />
       <FirstVisitHints />
+    </div>
+  );
+}
+
+function EmergencyControls({ deviceType, kids, systemState, onUpdateSettings, onUncheckAll, onFactoryReset }) {
+  const [confirmUncheck, setConfirmUncheck] = useState(null);
+  const [resetConfirm, setResetConfirm] = useState(false);
+  const [resetText, setResetText] = useState('');
+  const [autoApproveHours, setAutoApproveHours] = useState(systemState?.auto_approve_hours ?? 48);
+  const forceBoost = systemState?.force_morning_boost ?? false;
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between bg-slate-800 rounded-xl p-3">
+        <div>
+          <p className="font-quicksand text-sm text-white">Force Morning Boost</p>
+          <p className="font-quicksand text-xs text-slate-400">Early Bird bonus applies all day</p>
+        </div>
+        <button
+          className={`tv-focusable w-12 h-7 rounded-full transition-colors ${forceBoost ? 'bg-primary' : 'bg-slate-600'}`}
+          onClick={() => onUpdateSettings({ force_morning_boost: !forceBoost })}
+        >
+          <div className={`w-5 h-5 bg-white rounded-full transition-transform ${forceBoost ? 'translate-x-6' : 'translate-x-1'}`} />
+        </button>
+      </div>
+
+      {deviceType !== 'tv' && (
+        <div className="flex items-center justify-between bg-slate-800 rounded-xl p-3">
+          <div>
+            <p className="font-quicksand text-sm text-white">Auto-Approve Hours</p>
+            <p className="font-quicksand text-xs text-slate-400">0 = disabled</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              value={autoApproveHours}
+              onChange={e => setAutoApproveHours(parseInt(e.target.value) || 0)}
+              onBlur={() => onUpdateSettings({ auto_approve_hours: autoApproveHours })}
+              className="w-16 bg-slate-700 text-white text-sm text-center rounded-lg px-2 py-1 border border-slate-600"
+              min="0"
+            />
+          </div>
+        </div>
+      )}
+
+      {kids?.map(kid => (
+        <div key={kid.id} className="flex items-center justify-between bg-slate-800 rounded-xl p-3">
+          <p className="font-quicksand text-sm text-white">Uncheck All — {kid.name}</p>
+          {confirmUncheck === kid.id ? (
+            <div className="flex gap-2">
+              <button
+                className="tv-focusable px-3 py-1 rounded-lg bg-red-600 text-white text-xs font-quicksand"
+                onClick={() => { onUncheckAll(kid.id); setConfirmUncheck(null); }}
+              >
+                Confirm
+              </button>
+              <button
+                className="tv-focusable px-3 py-1 rounded-lg bg-slate-600 text-white text-xs font-quicksand"
+                onClick={() => setConfirmUncheck(null)}
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <button
+              className="tv-focusable px-3 py-1 rounded-lg bg-amber-600/20 text-amber-400 text-xs font-quicksand hover:bg-amber-600/40"
+              onClick={() => setConfirmUncheck(kid.id)}
+            >
+              Reset
+            </button>
+          )}
+        </div>
+      ))}
+
+      {deviceType !== 'tv' && (
+        <div className="bg-red-900/20 border border-red-800/30 rounded-xl p-3 space-y-2">
+          <p className="font-quicksand text-sm text-red-300">Factory Reset</p>
+          <p className="font-quicksand text-xs text-slate-400">Resets all kids to level 1, 0 XP, 0 coins. Cannot be undone.</p>
+          {!resetConfirm ? (
+            <button
+              className="px-3 py-1 rounded-lg bg-red-600/30 text-red-400 text-xs font-quicksand hover:bg-red-600/50"
+              onClick={() => setResetConfirm(true)}
+            >
+              Factory Reset...
+            </button>
+          ) : (
+            <div className="space-y-2">
+              <p className="font-quicksand text-xs text-red-300">Type RESET to confirm:</p>
+              <input
+                type="text"
+                value={resetText}
+                onChange={e => setResetText(e.target.value)}
+                className="w-full bg-slate-700 text-white text-sm rounded-lg px-3 py-1.5 border border-red-600"
+                placeholder="RESET"
+              />
+              <div className="flex gap-2">
+                <button
+                  className="px-3 py-1 rounded-lg bg-red-600 text-white text-xs font-quicksand disabled:opacity-30"
+                  disabled={resetText !== 'RESET'}
+                  onClick={() => { onFactoryReset(); setResetConfirm(false); setResetText(''); }}
+                >
+                  Confirm Reset
+                </button>
+                <button
+                  className="px-3 py-1 rounded-lg bg-slate-600 text-white text-xs font-quicksand"
+                  onClick={() => { setResetConfirm(false); setResetText(''); }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

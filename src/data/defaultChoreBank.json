@@ -1,1 +1,20 @@
-[]
+[
+  { "title": "Make your bed", "icon": "🛏️", "frequency": "daily", "xp_reward": 10, "coin_reward": 5 },
+  { "title": "Brush teeth (morning)", "icon": "🪥", "frequency": "daily", "xp_reward": 10, "coin_reward": 5 },
+  { "title": "Brush teeth (evening)", "icon": "🪥", "frequency": "daily", "xp_reward": 10, "coin_reward": 5 },
+  { "title": "Put away dishes", "icon": "🍽️", "frequency": "daily", "xp_reward": 10, "coin_reward": 5 },
+  { "title": "Pick up toys", "icon": "🧸", "frequency": "daily", "xp_reward": 10, "coin_reward": 5 },
+  { "title": "Read for 20 minutes", "icon": "📖", "frequency": "daily", "xp_reward": 15, "coin_reward": 10 },
+  { "title": "Practice instrument", "icon": "🎵", "frequency": "daily", "xp_reward": 15, "coin_reward": 10 },
+  { "title": "Set the table", "icon": "🍴", "frequency": "daily", "xp_reward": 10, "coin_reward": 5 },
+  { "title": "Feed the pets", "icon": "🐕", "frequency": "daily", "xp_reward": 10, "coin_reward": 5 },
+  { "title": "Water the plants", "icon": "🌱", "frequency": "daily", "xp_reward": 10, "coin_reward": 5 },
+  { "title": "Clean your room", "icon": "🧹", "frequency": "weekly", "xp_reward": 25, "coin_reward": 15 },
+  { "title": "Take out the trash", "icon": "🗑️", "frequency": "weekly", "xp_reward": 20, "coin_reward": 10 },
+  { "title": "Help with laundry", "icon": "👕", "frequency": "weekly", "xp_reward": 20, "coin_reward": 10 },
+  { "title": "Vacuum a room", "icon": "🏠", "frequency": "weekly", "xp_reward": 25, "coin_reward": 15 },
+  { "title": "Organize bookshelf", "icon": "📚", "frequency": "weekly", "xp_reward": 20, "coin_reward": 10 },
+  { "title": "Help wash the car", "icon": "🚗", "frequency": "once", "xp_reward": 40, "coin_reward": 25 },
+  { "title": "Deep clean bedroom", "icon": "✨", "frequency": "once", "xp_reward": 50, "coin_reward": 30 },
+  { "title": "Organize closet", "icon": "👗", "frequency": "once", "xp_reward": 40, "coin_reward": 20 }
+]

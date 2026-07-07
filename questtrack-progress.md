@@ -12,12 +12,12 @@
 |-------|------|--------|---------|-----------|---------|-------|
 | 00 | Environment Setup | ✅ COMPLETE | 2026-07-07 | 2026-07-07 | PROMOTE (self-review) | All 12 acceptance criteria PASS |
 | 01 | Schema & DB Foundation | ✅ COMPLETE | 2026-07-07 | 2026-07-07 | PROMOTE (self-review) | 15/15 acceptance criteria PASS |
-| 02 | Core UI Shell | ⬜ NOT STARTED | — | — | — | ⚠️ Human checkpoint after |
-| 03 | Quest Board & Economy | ⬜ NOT STARTED | — | — | — | ⚡ Parallel with Phase 04 |
-| 04 | Video & Curriculum | ⬜ NOT STARTED | — | — | — | ⚡ Parallel with Phase 03 |
-| 05 | AI Quiz Engine | ⬜ NOT STARTED | — | — | — | Requires 03 + 04 complete |
-| 06 | Reading Guild | ⬜ NOT STARTED | — | — | — | Requires 05 complete |
-| 07 | Parent Control Deck | ⬜ NOT STARTED | — | — | — | ⚠️ Human checkpoint after |
+| 02 | Core UI Shell | ✅ COMPLETE | 2026-07-07 | 2026-07-07 | PROMOTE (self-review) | 30/30 acceptance criteria PASS ⚠️ Human checkpoint |
+| 03 | Quest Board & Economy | ✅ COMPLETE | 2026-07-07 | 2026-07-07 | PROMOTE (adversarial review 40/40) | All 11 tasks, build passing |
+| 04 | Video & Curriculum | ✅ COMPLETE | 2026-07-07 | 2026-07-07 | PROMOTE (self-review) | All 8 tasks, build passing |
+| 05 | AI Quiz Engine | ✅ COMPLETE | 2026-07-07 | 2026-07-07 | PROMOTE (self-review) | All 7 tasks, 27/27 acceptance criteria PASS |
+| 06 | Reading Guild | ✅ COMPLETE | 2026-07-07 | 2026-07-07 | PROMOTE (self-review) | All 8 tasks, 29/29 acceptance criteria PASS |
+| 07 | Parent Control Deck | ✅ COMPLETE | 2026-07-07 | 2026-07-07 | PROMOTE (self-review) | All 11 tasks, 30/30 acceptance criteria PASS ⚠️ Human checkpoint |
 | 08 | Testing & Hardening | ⬜ NOT STARTED | — | — | — | Requires 07 complete |
 | 09 | Content, Polish & Deploy | ⬜ NOT STARTED | — | — | — | Requires 08 complete |
 

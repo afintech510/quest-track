@@ -1,13 +1,16 @@
 import { corsHeaders, handleCors } from '../_shared/cors.ts';
 import { getServiceClient } from '../_shared/supabaseAdmin.ts';
-
-// TODO Phase 07: Add session token validation
+import { validateSession } from '../_shared/validate-session.ts';
 
 Deno.serve(async (req) => {
   const corsResp = handleCors(req);
   if (corsResp) return corsResp;
 
   try {
+    const supabase = getServiceClient();
+    const authErr = await validateSession(req, supabase);
+    if (authErr) return authErr;
+
     const { kid_id, book_id } = await req.json();
 
     if (!kid_id || !book_id) {
@@ -17,7 +20,6 @@ Deno.serve(async (req) => {
       );
     }
 
-    const supabase = getServiceClient();
 
     const { data: existing } = await supabase
       .from('book_progress')

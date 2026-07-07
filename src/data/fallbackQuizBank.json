@@ -1,1 +1,106 @@
-[]
+[
+  {
+    "module_id": "math-operations",
+    "question": "What is 7 + 8?",
+    "options": ["A) 14", "B) 15", "C) 16", "D) 13"],
+    "correct_index": 1,
+    "explanation": "7 + 8 = 15. Great job adding!",
+    "standard_code": "NY-3.OA.1"
+  },
+  {
+    "module_id": "math-operations",
+    "question": "Which number sentence shows 3 groups of 4?",
+    "options": ["A) 3 + 4 = 7", "B) 3 × 4 = 12", "C) 4 - 3 = 1", "D) 4 ÷ 3 = 1"],
+    "correct_index": 1,
+    "explanation": "3 groups of 4 means 3 × 4 = 12. Multiplication is like adding equal groups!",
+    "standard_code": "NY-3.OA.1"
+  },
+  {
+    "module_id": "math-operations",
+    "question": "What is 24 ÷ 6?",
+    "options": ["A) 3", "B) 4", "C) 5", "D) 6"],
+    "correct_index": 1,
+    "explanation": "24 ÷ 6 = 4. You can think of it as: how many groups of 6 make 24?",
+    "standard_code": "NY-3.OA.2"
+  },
+  {
+    "module_id": "math-operations",
+    "question": "If you have 5 bags with 3 apples in each, how many apples do you have?",
+    "options": ["A) 8", "B) 12", "C) 15", "D) 20"],
+    "correct_index": 2,
+    "explanation": "5 bags × 3 apples = 15 apples total. You're a multiplication star!",
+    "standard_code": "NY-3.OA.1"
+  },
+  {
+    "module_id": "ela-reading",
+    "question": "What is the main idea of a story?",
+    "options": ["A) The first sentence", "B) What the story is mostly about", "C) The last sentence", "D) The title of the story"],
+    "correct_index": 1,
+    "explanation": "The main idea tells us what the whole story is mostly about. You're becoming a great reader!",
+    "standard_code": "NY-3.RI.2"
+  },
+  {
+    "module_id": "ela-reading",
+    "question": "What is a synonym?",
+    "options": ["A) A word that sounds the same", "B) A word that means the opposite", "C) A word that means almost the same thing", "D) A word that rhymes"],
+    "correct_index": 2,
+    "explanation": "A synonym is a word with a similar meaning, like 'happy' and 'glad'. Nice vocabulary skills!",
+    "standard_code": "NY-3.L.5"
+  },
+  {
+    "module_id": "ela-reading",
+    "question": "Which word is an adjective in this sentence: 'The big dog ran fast.'?",
+    "options": ["A) The", "B) big", "C) dog", "D) ran"],
+    "correct_index": 1,
+    "explanation": "'Big' describes the dog, so it's an adjective. Adjectives make our writing more interesting!",
+    "standard_code": "NY-3.L.1"
+  },
+  {
+    "module_id": "science-life",
+    "question": "What do plants need to grow?",
+    "options": ["A) Only water", "B) Only sunlight", "C) Water, sunlight, and air", "D) Only soil"],
+    "correct_index": 2,
+    "explanation": "Plants need water, sunlight, and air to grow strong and healthy. You're a nature expert!",
+    "standard_code": "NY-3.LS.1"
+  },
+  {
+    "module_id": "science-life",
+    "question": "What is the life cycle of a butterfly?",
+    "options": ["A) Egg then Adult", "B) Egg then Larva then Pupa then Adult", "C) Egg then Pupa then Adult", "D) Larva then Egg then Adult"],
+    "correct_index": 1,
+    "explanation": "Butterflies go through four stages: egg, larva (caterpillar), pupa (chrysalis), and adult. Amazing science knowledge!",
+    "standard_code": "NY-3.LS.1"
+  },
+  {
+    "module_id": "science-life",
+    "question": "Which is NOT a basic need of animals?",
+    "options": ["A) Food", "B) Water", "C) Television", "D) Shelter"],
+    "correct_index": 2,
+    "explanation": "Animals need food, water, and shelter to survive. Great thinking!",
+    "standard_code": "NY-3.LS.1"
+  },
+  {
+    "module_id": "social-studies",
+    "question": "What is a community?",
+    "options": ["A) A single house", "B) A place where people live, work, and play together", "C) A type of food", "D) A kind of animal"],
+    "correct_index": 1,
+    "explanation": "A community is where people live, work, and play together. You're part of a community too!",
+    "standard_code": "NY-3.SS.1"
+  },
+  {
+    "module_id": "social-studies",
+    "question": "What does a map show?",
+    "options": ["A) Only oceans", "B) Only mountains", "C) Places and how to get to them", "D) Only countries"],
+    "correct_index": 2,
+    "explanation": "Maps show us places and help us find our way. You're becoming a great explorer!",
+    "standard_code": "NY-3.SS.3"
+  },
+  {
+    "module_id": "social-studies",
+    "question": "Why do communities have rules?",
+    "options": ["A) To make people sad", "B) To keep everyone safe and fair", "C) Because rules are fun", "D) Only for kids"],
+    "correct_index": 1,
+    "explanation": "Rules help keep everyone safe and make things fair for all. You're learning about being a good citizen!",
+    "standard_code": "NY-3.SS.5"
+  }
+]

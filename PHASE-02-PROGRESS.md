@@ -1,0 +1,17 @@
+# Phase 02 Progress
+- [x] Task 1: Supabase client + constants
+- [x] Task 2: Offline cache (IndexedDB)
+- [x] Task 3: useSupabase hook (real-time state mirror)
+- [x] Task 4: useVisibilityReconnect hook
+- [x] Task 5: useDeviceType hook
+- [x] Task 6: useConnectionHealth hook
+- [x] Task 7: Spatial navigation engine (useSpatialNav)
+- [x] Task 8: Profile Switcher + SoftLockModal + SoftLockSetup
+- [x] Task 9: Hero Stats HUD
+- [x] Task 10: Toast notification system
+- [x] Task 11: Level-up modal with event queue
+- [x] Task 12: Confetti canvas
+- [x] Task 13: Header & layout
+- [x] Task 14: Empty states & first-visit hints
+- [x] Task 15: App shell & routing
+- [x] Task 16: Dev-only remote emulator

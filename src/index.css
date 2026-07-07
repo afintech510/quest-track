@@ -4,8 +4,8 @@
   --color-primary: #f43f5e;
   --color-primary-light: #fb7185;
   --color-primary-dark: #e11d48;
-  --color-quinn: #f59e0b;
-  --color-quinn-light: #fbbf24;
+  --color-quinn: #04D9FF;
+  --color-quinn-light: #33e1ff;
   --color-cora: #a855f7;
   --color-cora-light: #c084fc;
   --color-family: #10b981;
@@ -15,3 +15,31 @@
   --font-fredoka: "Fredoka", sans-serif;
   --font-quicksand: "Quicksand", sans-serif;
 }
+
+@keyframes slide-in {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+
+@keyframes bounce-in {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.95); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(244, 63, 94, 0.4); }
+  50% { box-shadow: 0 0 20px rgba(244, 63, 94, 0.7); }
+}
+
+.animate-slide-in { animation: slide-in 0.3s ease-out; }
+.animate-shake { animation: shake 0.4s ease-in-out; }
+.animate-bounce-in { animation: bounce-in 0.5s ease-out; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
