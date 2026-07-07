@@ -1,0 +1,9 @@
+-- Migration 003: CHECK Constraints
+-- All CHECK constraints were defined inline in 001_base_tables.sql
+-- This file documents the 12 constraints for reference:
+--   chk_xp_nonneg (kids), chk_daily_xp_nonneg (kids), chk_coins_nonneg (kids)
+--   chk_module_subject (modules), chk_video_type (lessons)
+--   chk_book_tier (books), chk_book_status (book_progress)
+--   chk_chore_frequency (chore_definitions), chk_chore_status (chore_events)
+--   chk_reset_period (chore_events), chk_event_category (calendar_events)
+--   chk_difficulty_tier (quiz_attempts)

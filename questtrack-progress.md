@@ -11,7 +11,7 @@
 | Phase | Name | Status | Started | Completed | Verdict | Notes |
 |-------|------|--------|---------|-----------|---------|-------|
 | 00 | Environment Setup | ✅ COMPLETE | 2026-07-07 | 2026-07-07 | PROMOTE (self-review) | All 12 acceptance criteria PASS |
-| 01 | Schema & DB Foundation | ⬜ NOT STARTED | — | — | — | ⚠️ Human checkpoint after |
+| 01 | Schema & DB Foundation | ✅ COMPLETE | 2026-07-07 | 2026-07-07 | PROMOTE (self-review) | 15/15 acceptance criteria PASS |
 | 02 | Core UI Shell | ⬜ NOT STARTED | — | — | — | ⚠️ Human checkpoint after |
 | 03 | Quest Board & Economy | ⬜ NOT STARTED | — | — | — | ⚡ Parallel with Phase 04 |
 | 04 | Video & Curriculum | ⬜ NOT STARTED | — | — | — | ⚡ Parallel with Phase 03 |

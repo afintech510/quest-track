@@ -1,0 +1,6 @@
+-- Migration 004: RPC Functions
+-- See questtrack-spec-v2.md §2.4 for full SQL
+-- Applied to Supabase remote via MCP
+-- Functions: complete_chore, submit_quiz, redeem_reward, perform_daily_reset
+-- All use SECURITY DEFINER with search_path = 'public'
+-- All implement idempotency via processed_mutations table
