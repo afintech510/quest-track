@@ -1,0 +1,10 @@
+export const XP_CAP = 200;
+export const XP_PER_LEVEL = 100;
+export const AUTO_APPROVE_HOURS_DEFAULT = 24;
+export const EARLY_BIRD_START = 5;
+export const EARLY_BIRD_END = 7;
+export const EARLY_BIRD_XP_MULTIPLIER = 2;
+export const EARLY_BIRD_BONUS_COINS = 20;
+export const PIN_MAX_ATTEMPTS = 5;
+export const PIN_LOCKOUT_MINUTES = 5;
+export const SESSION_EXPIRY_MINUTES = 30;

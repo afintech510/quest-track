@@ -1,0 +1,8 @@
+{
+  "appId": "com.questtrack.academy",
+  "appName": "QuestTrack Academy",
+  "webDir": "dist",
+  "android": {
+    "webContentsDebuggingEnabled": true
+  }
+}

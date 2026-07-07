@@ -1,0 +1,28 @@
+{
+  "name": "questtrack-academy",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.4.1",
+    "@capacitor/cli": "^8.4.1",
+    "@capacitor/core": "^8.4.1",
+    "@supabase/supabase-js": "^2.110.0",
+    "@vitejs/plugin-react": "^6.0.3",
+    "canvas-confetti": "^1.9.4",
+    "lucide-react": "^1.23.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "rrule": "^2.8.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.2",
+    "tailwindcss": "^4.3.2",
+    "vite": "^8.1.3"
+  }
+}
