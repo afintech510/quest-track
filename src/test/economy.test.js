@@ -136,7 +136,7 @@ describe('useEconomy — completeChore', () => {
 
     expect(data.status).toBe('queued');
     expect(mockSupabase.rpc).not.toHaveBeenCalled();
-    expect(showToast).toHaveBeenCalledWith(expect.stringContaining('offline'), 'info');
+    expect(showToast).toHaveBeenCalledWith('Saving locally — will sync when online!', 'info');
   });
 
   test('no active kid returns null without calling RPC', async () => {

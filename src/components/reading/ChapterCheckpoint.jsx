@@ -240,7 +240,7 @@ export default function ChapterCheckpoint({
 
       if (score > maxScore / 2) fireConfetti(resultsCardRef.current);
     } catch (_err) {
-      showToast('Saving results offline — will sync when connected!', 'info');
+      showToast('Saving locally — will sync when online!', 'info');
       await queueMutation({
         mutation_id: mutationId,
         rpc_name: 'complete_checkpoint',

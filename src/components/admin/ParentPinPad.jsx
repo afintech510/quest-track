@@ -142,8 +142,7 @@ export default function ParentPinPad({ onSuccess, onClose }) {
 
         {isLocked ? (
           <div className="text-center mb-6">
-            <p className="font-quicksand text-sm text-red-400 mb-1">Too many attempts</p>
-            <p className="font-fredoka text-2xl text-red-300">{formatLockout(lockoutSeconds)}</p>
+            <p className="font-quicksand text-sm text-red-400 mb-1">Too many attempts. Try again in 5 minutes.</p>
           </div>
         ) : (
           attemptsRemaining < PIN_MAX_ATTEMPTS && (

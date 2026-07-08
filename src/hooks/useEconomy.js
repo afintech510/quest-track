@@ -12,7 +12,7 @@ export default function useEconomy(supabase, activeKid, showToast, triggerLevelU
         rpc_name: 'complete_chore',
         params: { p_chore_event_id: choreEventId, p_mutation_id: mutationId },
       });
-      showToast('Chore saved offline — will sync when connected!', 'info');
+      showToast('Saving locally — will sync when online!', 'info');
       return { status: 'queued' };
     }
 
@@ -61,7 +61,7 @@ export default function useEconomy(supabase, activeKid, showToast, triggerLevelU
         rpc_name: 'redeem_reward',
         params: { p_kid_id: activeKid.id, p_reward_id: rewardId, p_mutation_id: mutationId },
       });
-      showToast('Purchase saved offline — will sync when connected!', 'info');
+      showToast('Saving locally — will sync when online!', 'info');
       return { status: 'queued' };
     }
 

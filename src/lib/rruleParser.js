@@ -1,6 +1,15 @@
 import { RRule } from 'rrule';
 
+const cache = new Map();
+
+function getCacheKey(events, viewStart, viewEnd) {
+  return `${events.map(e => e.id + (e.rrule || '')).join('|')}::${viewStart.getTime()}::${viewEnd.getTime()}`;
+}
+
 export function expandEvents(events, viewStart, viewEnd) {
+  const key = getCacheKey(events, viewStart, viewEnd);
+  if (cache.has(key)) return cache.get(key);
+
   const expanded = [];
   for (const event of events) {
     if (event.rrule) {
@@ -20,5 +29,12 @@ export function expandEvents(events, viewStart, viewEnd) {
       }
     }
   }
+
+  cache.set(key, expanded);
+  if (cache.size > 50) {
+    const firstKey = cache.keys().next().value;
+    cache.delete(firstKey);
+  }
+
   return expanded;
 }

@@ -81,6 +81,7 @@ export default function QuizEngine({
 
       if (data.source === 'client_fallback' || !data.questions?.length) {
         setQuestions(loadClientFallback(module.id));
+        showToast("Let's try some practice questions instead!", 'info');
       } else {
         setQuestions(data.questions);
       }
@@ -88,6 +89,7 @@ export default function QuizEngine({
     } catch (_err) {
       clearTimeout(clientTimeout);
       setQuestions(loadClientFallback(module.id));
+      showToast("Let's try some practice questions instead!", 'info');
       setQuizState('active');
     } finally {
       inFlightRef.current = false;
@@ -213,7 +215,7 @@ export default function QuizEngine({
 
       if (score > maxScore / 2) fireConfetti(resultsCardRef.current);
     } catch (_err) {
-      showToast('Saving results offline — will sync when connected!', 'info');
+      showToast('Saving locally — will sync when online!', 'info');
       await queueMutation({
         mutation_id: mutationId,
         rpc_name: 'submit_quiz',

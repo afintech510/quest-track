@@ -136,19 +136,22 @@ function AppContent() {
     const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
     const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
     try {
-      const headers = {
-        'Authorization': `Bearer ${anonKey}`,
-        'Content-Type': 'application/json',
-        'x-session-token': sessionToken,
-      };
-      const { data: kidsData } = await supabase.from('kids').select('id').eq('family_id', FAMILY_ID);
-      for (const kid of kidsData || []) {
-        await supabase.from('kids').update({ level: 1, xp: 0, coins: 0, daily_xp_earned: 0, streak_days: 0 }).eq('id', kid.id);
-        await supabase.from('chore_events').delete().eq('kid_id', kid.id);
-        await supabase.from('quiz_attempts').delete().eq('kid_id', kid.id);
+      const response = await fetch(`${supabaseUrl}/functions/v1/factory-reset`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${anonKey}`,
+          'Content-Type': 'application/json',
+          'x-session-token': sessionToken,
+        },
+        body: JSON.stringify({ family_id: FAMILY_ID }),
+      });
+      const data = await response.json();
+      if (data.status === 'success') {
+        showToast('Factory reset complete', 'info');
+        await refreshData();
+      } else {
+        showToast('Factory reset failed', 'error');
       }
-      showToast('Factory reset complete', 'info');
-      await refreshData();
     } catch {
       showToast('Factory reset failed', 'error');
     }
