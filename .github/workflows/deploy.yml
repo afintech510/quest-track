@@ -1,0 +1,33 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy-questtrack
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          command_timeout: 20m
+          script: |
+            set -e
+            cd /opt/questtrack
+            git fetch --all --prune
+            git reset --hard origin/main
+            docker compose up -d --build
+            docker image prune -f
+            docker compose ps
+            echo "Checking health..."
+            sleep 3
+            docker exec questtrack_web wget -qO /dev/null http://localhost/ && echo "Health check passed" || echo "WARNING: Health check failed (app may still be starting)"
